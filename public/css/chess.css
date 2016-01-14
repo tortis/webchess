@@ -1,0 +1,95 @@
+body, html {
+    height: 100%;
+}
+
+#chat-log {
+    border: 1px black solid;
+    height: 125px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+}
+
+#chat-log > p {
+    margin-bottom: 0;
+}
+
+.board {
+    margin: auto;
+}
+
+.dead {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.board > tbody > tr > td {
+    width: 75px;
+    height: 75px;
+    border: 1px solid black;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.board > tbody > tr:nth-child(2n+1) > td:nth-child(2n) {
+    background-color: #333;
+}
+
+.board > tbody > tr:nth-child(2n) > td:nth-child(2n+1) {
+    background-color: #333;
+}
+
+.selected {
+    background-color: #2e6da4 !important;
+}
+
+.white-pawn {
+    background-image: url('/img/w_pawn.png');
+}
+
+.white-rook {
+    background-image: url('/img/w_rook.png');
+}
+
+.white-knight {
+    background-image: url('/img/w_knight.png');
+}
+
+.white-bishop {
+    background-image: url('/img/w_bishop.png');
+}
+
+.white-queen {
+    background-image: url('/img/w_queen.png');
+}
+
+.white-king {
+    background-image: url('/img/w_king.png');
+}
+
+.black-pawn {
+    background-image: url('/img/b_pawn.png');
+}
+
+.black-rook {
+    background-image: url('/img/b_rook.png');
+}
+
+.black-knight {
+    background-image: url('/img/b_knight.png');
+}
+
+.black-bishop {
+    background-image: url('/img/b_bishop.png');
+}
+
+.black-queen {
+    background-image: url('/img/b_queen.png');
+}
+
+.black-king {
+    background-image: url('/img/b_king.png');
+}
+

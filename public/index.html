@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Webchess</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/chess.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 id="status">Waiting for opponent...</h2>
+        <p id="player-color"></p>
+    </div>
+    <table class="board">
+        <tr>
+            <td id="0-7"></td>
+            <td id="1-7"></td>
+            <td id="2-7"></td>
+            <td id="3-7"></td>
+            <td id="4-7"></td>
+            <td id="5-7"></td>
+            <td id="6-7"></td>
+            <td id="7-7"></td>
+        </tr>
+        <tr>
+            <td id="0-6"></td>
+            <td id="1-6"></td>
+            <td id="2-6"></td>
+            <td id="3-6"></td>
+            <td id="4-6"></td>
+            <td id="5-6"></td>
+            <td id="6-6"></td>
+            <td id="7-6"></td>
+        </tr>
+        <tr>
+            <td id="0-5"></td>
+            <td id="1-5"></td>
+            <td id="2-5"></td>
+            <td id="3-5"></td>
+            <td id="4-5"></td>
+            <td id="5-5"></td>
+            <td id="6-5"></td>
+            <td id="7-5"></td>
+        </tr>
+        <tr>
+            <td id="0-4"></td>
+            <td id="1-4"></td>
+            <td id="2-4"></td>
+            <td id="3-4"></td>
+            <td id="4-4"></td>
+            <td id="5-4"></td>
+            <td id="6-4"></td>
+            <td id="7-4"></td>
+        </tr>
+        <tr>
+            <td id="0-3"></td>
+            <td id="1-3"></td>
+            <td id="2-3"></td>
+            <td id="3-3"></td>
+            <td id="4-3"></td>
+            <td id="5-3"></td>
+            <td id="6-3"></td>
+            <td id="7-3"></td>
+        </tr>
+        <tr>
+            <td id="0-2"></td>
+            <td id="1-2"></td>
+            <td id="2-2"></td>
+            <td id="3-2"></td>
+            <td id="4-2"></td>
+            <td id="5-2"></td>
+            <td id="6-2"></td>
+            <td id="7-2"></td>
+        </tr>
+        <tr>
+            <td id="0-1"></td>
+            <td id="1-1"></td>
+            <td id="2-1"></td>
+            <td id="3-1"></td>
+            <td id="4-1"></td>
+            <td id="5-1"></td>
+            <td id="6-1"></td>
+            <td id="7-1"></td>
+        </tr>
+        <tr>
+            <td id="0-0"></td>
+            <td id="1-0"></td>
+            <td id="2-0"></td>
+            <td id="3-0"></td>
+            <td id="4-0"></td>
+            <td id="5-0"></td>
+            <td id="6-0"></td>
+            <td id="7-0"></td>
+        </tr>
+    </table>
+    <div class="container">
+        <div class="row">
+            <div id="dead_w" class="col-sm-6"></div>
+            <div id="dead_b" class="col-sm-6"></div>
+        </div>
+        <div id="chat-log">
+        </div>
+        <input type="text" id="chat-input" class="form-control" >
+    </div>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/chess.js"></script>
+</body>
+</html>
