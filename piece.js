@@ -25,7 +25,8 @@ Piece.Colors = {
 Piece.Moves = {
     MOVE:      0,
     DIE:       1,
-    SWAP:      2
+    SWAP:      2,
+    PROMO:     3,
 }
 
 Piece.prototype.reset = function() {
@@ -44,13 +45,19 @@ Piece.prototype.moveSummary = function(x, y, b) {
     var target = b[x][y];
     switch(this.type) {
         case Piece.Types.PAWN:
+            // Check if this move will result in a promotion
+            var promoted = Piece.Moves.MOVE;
+            if ((y === 7 && this.color === Piece.Colors.WHITE) || (y === 0 && this.color === Piece.Colors.BLACK)) {
+                promoted = Piece.Moves.PROMO;
+            }
+
             // Move forward by one
             if (x === this.x && y === this.y + this.color && !target) {
                 return {
                     valid: true,
                     attack: false,
                     steps: [
-                        {x: this.x, y: this.y, move: Piece.Moves.MOVE, to: {x: x, y: y}}
+                        {x: this.x, y: this.y, move: promoted, to: {x: x, y: y}}
                     ]
                 };
             }
@@ -84,7 +91,7 @@ Piece.prototype.moveSummary = function(x, y, b) {
                     takes: target,
                     steps: [
                         {x: x, y: y, move: Piece.Moves.DIE},
-                        {x: this.x, y:this.y, move: Piece.Moves.MOVE, to: {x: x, y: y}}
+                        {x: this.x, y:this.y, move: promoted, to: {x: x, y: y}}
                     ]
                 };
             }

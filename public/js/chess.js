@@ -33,7 +33,8 @@ var msgTypes = {
 var Moves = {
     MOVE:      0,
     DIE:       1,
-    SWAP:      2
+    SWAP:      2,
+    PROMO:     3
 };
 
 var socket = null;
@@ -43,6 +44,7 @@ var state = null;
 var me = null;
 
 var selected = null;
+var lastMoved = null;
 
 function getPieceClass(type, color) {
     var c = '';
@@ -72,9 +74,17 @@ function resetBoard() {
 
 function updateBoard() {
     if (turn === me) {
-        $('#status').text('Your move')
+        if (state === me) {
+            $('#status').text('Your move (checked)');
+        } else {
+            $('#status').text('Your move');
+        }
     } else {
-        $('#status').text('Opponent\'s move');
+        if (state === me * -1) {
+            $('#status').text('Opponent\'s move (checked)');
+        } else {
+            $('#status').text('Opponent\'s move');
+        }
     }
     for (y = 0; y < 8; y++) {
         for (x = 0; x < 8; x++) {
@@ -92,9 +102,17 @@ function updateBoardPartial(u) {
         return;
     }
     if (turn === me) {
-        $('#status').text('Your move')
+        if (state === me) {
+            $('#status').text('Your move (checked)');
+        } else {
+            $('#status').text('Your move');
+        }
     } else {
-        $('#status').text('Opponent\'s move');
+        if (state === me * -1) {
+            $('#status').text('Opponent\'s move (checked)');
+        } else {
+            $('#status').text('Opponent\'s move');
+        }
     }
 
     for (var i = 0; i < u.move.steps.length; i++) {
@@ -103,10 +121,28 @@ function updateBoardPartial(u) {
             board[s.to.x][s.to.y] = board[s.x][s.y];
             board[s.x][s.y] = undefined;
             $('#'+ s.x+'-'+ s.y).css('background-image', 'none');
-            $('#'+ s.to.x+'-'+ s.to.y).css('background-image', 'url(/img/'+getPieceClass(board[s.to.x][s.to.y].type, board[s.to.x][s.to.y].color)+'.png)');
+            var toTd = $('#'+ s.to.x+'-'+ s.to.y);
+            toTd.css('background-image', 'url(/img/'+getPieceClass(board[s.to.x][s.to.y].type, board[s.to.x][s.to.y].color)+'.png)')
+                .addClass('last-move');
+            if (lastMoved) {
+                lastMoved.removeClass('last-move');
+            }
+            lastMoved = toTd;
         } else if (s.move === Moves.DIE) {
             $('#'+ s.x+'-'+ s.y).css('background-image', 'none');
             board[s.x][s.y] = undefined;
+        } else if (s.move === Moves.PROMO) {
+            board[s.to.x][s.to.y] = board[s.x][s.y];
+            board[s.to.x][s.to.y].type = pieceTypes.QUEEN;
+            board[s.x][s.y] = undefined;
+            $('#'+ s.x+'-'+ s.y).css('background-image', 'none');
+            var toTd = $('#'+ s.to.x+'-'+ s.to.y);
+            toTd.css('background-image', 'url(/img/'+getPieceClass(board[s.to.x][s.to.y].type, board[s.to.x][s.to.y].color)+'.png)')
+                .addClass('last-move');
+            if (lastMoved) {
+                lastMoved.removeClass('last-move');
+            }
+            lastMoved = toTd;
         }
     }
 

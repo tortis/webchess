@@ -68,6 +68,10 @@ Game.prototype.executeMove = function(move) {
                 this.board[s.x][s.y] = undefined;
                 this.board[s.to.x][s.to.y].move(s.to.x, s.to.y);
                 break;
+            case Piece.Moves.PROMO:
+                this.board[s.to.x][s.to.y] = new Piece(Piece.Types.QUEEN,  this.board[s.x][s.y].color, s.to.x, s.to.y);
+                this.board[s.x][s.y] = undefined;
+                break;
             case Piece.Moves.DIE:
                 if (this.board[s.x][s.y].color === Piece.Colors.WHITE) {
                     this.dead_w.push(this.board[s.x][s.y]);
@@ -175,6 +179,54 @@ Game.prototype.updateState = function() {
         return;
     // How do you even check for check.
     // Loop over every piece, and attempt to attack the opponent king.
+    // (1) Locate each player's king (or always keep track of it).
+    // (2) Loop over each piece on the board:
+    //      - If the piece is white, run moveSummary on black king
+    //      - If the piece is black, run moveSummary on white king
+    //      - If any piece gets a valid attack move, then the king of the opponent is in check.
+    // (3) If no piece can attack the opponent king, the running state is maintained.
+
+    // (1)
+    var whiteKing;
+    var blackKing;
+    for (var x = 0; x < this.board.length; x++) {
+        for (var y = 0; y < this.board[x].length; y++) {
+            if (this.board[x][y] && this.board[x][y].type === Piece.Types.KING) {
+                if (this.board[x][y].color === Piece.Colors.WHITE)
+                    whiteKing = this.board[x][y];
+                else if (this.board[x][y].color === Piece.Colors.BLACK)
+                    blackKing = this.board[x][y];
+            }
+        }
+    }
+    if (!whiteKing || !blackKing) {
+        this.state = Game.States.INVALID;
+        return;
+    }
+
+    // (2)
+    for (var x = 0; x < this.board.length; x++) {
+        for (var y = 0; y < this.board[x].length; y++) {
+            if (this.board[x][y]) {
+                if (this.board[x][y].color === Piece.Colors.WHITE) {
+                    var ms = this.board[x][y].moveSummary(blackKing.x, blackKing.y, this.board);
+                    if (ms.valid) {
+                        this.state = Game.States.CHECK_B;
+                        return;
+                    }
+                } else if (this.board[x][y].color === Piece.Colors.BLACK) {
+                    var ms = this.board[x][y].moveSummary(whiteKing.x, whiteKing.y, this.board);
+                    if (ms.valid) {
+                        this.state = Game.States.CHECK_W;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    // (3)
+    this.state = Game.States.RUNNING;
 };
 
 Game.prototype.broadcast = function(msg) {

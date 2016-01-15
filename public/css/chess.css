@@ -13,16 +13,16 @@ body, html {
     margin-bottom: 0;
 }
 
-.board {
-    margin: auto;
-}
-
 .dead {
     width: 75px;
     height: 75px;
     display: inline-block;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.board {
+    margin: auto;
 }
 
 .board > tbody > tr > td {
@@ -43,6 +43,11 @@ body, html {
 
 .selected {
     background-color: #2e6da4 !important;
+}
+
+.last-move {
+    border-color: red !important;
+    border-width: 3px !important;
 }
 
 .white-pawn {

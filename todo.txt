@@ -1,0 +1,10 @@
+- Event log
+- Black side inverted board
+- Inconsistant state (ui shows pawn, but it does not exist on the board)
+- move animation
+- timer
+- Entry page (choose name, pick opponent, etc)
+- Persistant games (stored in db)
+- accounts
+- ladder
+- show allowed moves for selected piece
